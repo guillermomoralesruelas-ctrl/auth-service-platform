@@ -1,0 +1,34 @@
+Fase,Tarea,Estado,Fecha
+Fase 1 - Fundacion,Crear NestJS monorepo con 3 apps,Completado,2026-04-23T07:51:58
+Fase 1 - Fundacion,Crear proyecto Next.js 14 con TypeScript,Completado,2026-04-23T07:51:58
+Fase 1 - Fundacion,docker-compose.yml con PostgreSQL y Redis,Completado,2026-04-23T07:51:58
+Fase 1 - Fundacion,Configurar TypeORM + entidades base (User / Role),Completado,2026-04-23T07:51:58
+Fase 1 - Fundacion,Variables de entorno (.env.example y .env),Completado,2026-04-23T07:51:58
+Fase 2 - Auth Core,Register: hash de contrasena con bcrypt,Completado,2026-04-25T12:21:00
+Fase 2 - Auth Core,Login: devuelve access_token + refresh_token,Completado,2026-04-25T12:21:00
+Fase 2 - Auth Core,Guards JWT en rutas protegidas,Completado,2026-04-25T12:21:00
+Fase 2 - Auth Core,Refresh token: rotacion automatica,Completado,2026-04-25T12:21:00
+Fase 2 - Auth Core,Logout: revocacion en Redis (blacklist),Completado,2026-04-25T12:21:00
+Fase 2 - Auth Core,Swagger docs en auth-service,Completado,2026-04-25T12:21:00
+Fase 3 - API Gateway,Gateway con @nestjs/microservices o HTTP proxy,Completado,2026-04-25T12:37:00
+Fase 3 - API Gateway,Validacion JWT centralizada (guard global),Completado,2026-04-25T12:37:00
+Fase 3 - API Gateway,Rate limiting (@nestjs/throttler + Redis store),Completado,2026-04-25T12:37:00
+Fase 3 - API Gateway,Logging de requests (auditoria),Completado,2026-04-25T12:37:00
+Fase 4 - User Service,CRUD de usuarios,Completado,2026-04-25T12:45:00
+Fase 4 - User Service,Sistema de roles (USER / ADMIN),Completado,2026-04-25T12:45:00
+Fase 4 - User Service,Guards de roles (RolesGuard),Completado,2026-04-25T12:45:00
+Fase 4 - User Service,Endpoint /users/me protegido,Completado,2026-04-25T12:45:00
+Fase 5 - OAuth2 Google,Configurar Google Cloud Console,Completado,2026-04-25T12:50:00
+Fase 5 - OAuth2 Google,passport-google-oauth20 en auth-service,Completado,2026-04-25T12:50:00
+Fase 5 - OAuth2 Google,Flujo completo: redirect -> callback -> JWT,Completado,2026-04-25T12:50:00
+Fase 5 - OAuth2 Google,Conectar con boton 'Login con Google' en frontend,Completado,2026-04-25T12:50:00
+Fase 6 - Frontend Next.js,Layout base con design system,Completado,2026-04-25T20:50:00
+Fase 6 - Frontend Next.js,Pagina /login con form + boton Google,Completado,2026-04-25T20:50:00
+Fase 6 - Frontend Next.js,Pagina /register,Completado,2026-04-25T20:50:00
+Fase 6 - Frontend Next.js,Middleware Next.js para proteger rutas,Completado,2026-04-25T20:50:00
+Fase 6 - Frontend Next.js,Dashboard: muestra usuario autenticado,Completado,2026-04-25T20:50:00
+Fase 6 - Frontend Next.js,Perfil: editar datos,Completado,2026-04-25T20:50:00
+Fase 6 - Frontend Next.js,Logout con invalidacion de tokens,Completado,2026-04-25T20:50:00
+Fase 7 - Deploy & Polish,Dockerfiles para cada servicio,Completado,2026-04-26T01:05:00
+Fase 7 - Deploy & Polish,Deploy en Railway,Completado,2026-04-26T01:05:00
+Fase 7 - Deploy & Polish,README con arquitectura y screenshots,Completado,2026-04-26T01:05:00
