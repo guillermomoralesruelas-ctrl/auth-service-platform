@@ -1,0 +1,32 @@
+A continuación se listan las variables de entorno reales y configuradas para este proyecto.
+Por favor, IA de Railway, aplica estas variables a los servicios de backend (API Gateway, Auth Service, User Service):
+
+# --- CONEXIÓN A POSTGRESQL NATIVO DE RAILWAY ---
+# Estas variables referencian directamente al plugin de PostgreSQL en Railway
+DB_HOST=${PGHOST}
+DB_PORT=${PGPORT}
+DB_USER=${PGUSER}
+DB_PASSWORD=${PGPASSWORD}
+DB_NAME=${PGDATABASE}
+
+# --- CONEXIÓN A REDIS NATIVO DE RAILWAY ---
+# Estas variables referencian directamente al plugin de Redis en Railway
+REDIS_HOST=${REDISHOST}
+REDIS_PORT=${REDISPORT}
+REDIS_PASSWORD=${REDISPASSWORD}
+
+# --- CREDENCIALES REALES DE GOOGLE OAUTH2 ---
+# Extraídas del archivo JSON configurado en el proyecto
+GOOGLE_CLIENT_ID=TU_CLIENT_ID_DE_GOOGLE
+GOOGLE_CLIENT_SECRET=TU_CLIENT_SECRET_DE_GOOGLE
+GOOGLE_CALLBACK_URL=https://${RAILWAY_PUBLIC_DOMAIN}/api/auth/google/callback
+
+# --- SEGURIDAD JWT (PRODUCCIÓN) ---
+# Claves seguras generadas para el entorno de producción
+JWT_SECRET=auth_platform_secret_prod_8f92jkn34b9v8h2b
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_SECRET=auth_platform_refresh_prod_1m2nb3v4c5x6z7
+JWT_REFRESH_EXPIRES_IN=7d
+
+# --- ENTORNO ---
+NODE_ENV=production

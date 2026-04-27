@@ -1,3 +1,4 @@
+git add . ; git commit -m "update files" ; git push
 # Auth Service Platform (JWT + OAuth2 + API Gateway)
 
 Una plataforma de autenticación desacoplada basada en microservicios, capaz de gestionar identidad, autorización y sesiones para múltiples aplicaciones cliente. Implementada con Node.js, NestJS, Next.js, Redis, y PostgreSQL.
