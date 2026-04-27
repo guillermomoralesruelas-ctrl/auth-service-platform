@@ -26,7 +26,7 @@ export default function LandingPage() {
           <Link href="/login" className="btn-primary flex items-center justify-center gap-2 max-w-[200px] text-lg">
             Start Demo <ArrowRight size={20} />
           </Link>
-          <a href="http://localhost:3000/api/docs" target="_blank" className="btn-social max-w-[200px] text-lg">
+          <a href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api'}/docs`} target="_blank" className="btn-social max-w-[200px] text-lg">
             API Docs
           </a>
         </div>
