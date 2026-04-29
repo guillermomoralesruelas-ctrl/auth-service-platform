@@ -34,10 +34,6 @@ dist/
 *.sln
 *.sw?
 
-# JSON Secret files
-*.json
-!package.json
-!package-lock.json
-!tsconfig.json
-!nest-cli.json
-!railway.json
+# Google secret files (keep all other JSON files)
+client_secret_*.json
+.env copy
