@@ -39,5 +39,7 @@ dist/
 !package.json
 !package-lock.json
 !tsconfig.json
+!tsconfig.*.json
 !nest-cli.json
 !railway.json
+!jest-e2e.json
