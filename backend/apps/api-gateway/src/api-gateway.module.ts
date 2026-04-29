@@ -40,12 +40,11 @@ export class ApiGatewayModule implements NestModule {
       .apply(AuthMiddleware)
       .forRoutes({ path: 'api/users/*', method: RequestMethod.ALL });
 
-    // Auth Service Proxy (Rutas públicas y privadas mezcladas, el auth-service se encarga de sus guards si es necesario, 
-    // pero el Gateway no bloquea /auth/login ni /auth/register)
+    // Auth Service Proxy
     consumer
       .apply(
         createProxyMiddleware({
-          target: `http://localhost:${this.configService.get<number>('AUTH_SERVICE_PORT', 3001)}`,
+          target: this.configService.get<string>('AUTH_SERVICE_URL') || `http://localhost:${this.configService.get<number>('AUTH_SERVICE_PORT', 3001)}`,
           changeOrigin: true,
           pathRewrite: { '^/api/auth': '/auth' },
         }),
@@ -56,7 +55,7 @@ export class ApiGatewayModule implements NestModule {
     consumer
       .apply(
         createProxyMiddleware({
-          target: `http://localhost:${this.configService.get<number>('USER_SERVICE_PORT', 3002)}`,
+          target: this.configService.get<string>('USER_SERVICE_URL') || `http://localhost:${this.configService.get<number>('USER_SERVICE_PORT', 3002)}`,
           changeOrigin: true,
           pathRewrite: { '^/api/users': '/users' },
         }),
