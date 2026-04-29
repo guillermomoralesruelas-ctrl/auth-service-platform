@@ -15,8 +15,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  const port = process.env.USER_SERVICE_PORT || 3002;
-  await app.listen(port);
-  console.log(`User Service running on http://localhost:${port}`);
+  const port = process.env.PORT || process.env.USER_SERVICE_PORT || 3002;
+  await app.listen(port, '0.0.0.0');
+  console.log(`User Service running on port ${port}`);
 }
 bootstrap();
