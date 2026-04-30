@@ -27,7 +27,7 @@ export default function LandingPage() {
             Start Demo <ArrowRight size={20} />
           </Link>
           <a 
-            href={process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/docs` : '/api/docs'} 
+            href="https://api-gateway-auth-service.up.railway.app/api/docs" 
             target="_blank" 
             rel="noopener noreferrer"
             className="btn-social max-w-[200px] text-lg"
