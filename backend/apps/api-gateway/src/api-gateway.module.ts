@@ -6,6 +6,8 @@ import { RedisModule } from '../../../libs/common/src';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
+import { AppController } from './app.controller';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -20,15 +22,9 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => [
-        {
-          ttl: 60, // 60 seconds
-          limit: 100, // 100 requests per TTL
-        },
-      ],
     }),
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class ApiGatewayModule implements NestModule {
