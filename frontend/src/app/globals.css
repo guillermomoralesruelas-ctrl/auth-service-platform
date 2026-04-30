@@ -51,29 +51,29 @@ body {
 
 /* Card Styling */
 .auth-card {
-  width: 480px; /* Grander, more premium width */
-  min-height: 740px; /* Spacious minimum height */
+  width: 400px; /* Reduced width */
+  min-height: 560px; /* Reduced min-height */
   background: rgba(22, 23, 34, 0.6);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 40px; /* Softer, more organic corners */
-  padding: 64px 56px; /* Increased breathing room */
-  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6);
+  border-radius: 28px;
+  padding: 40px 32px; /* Reduced padding */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .icon-box {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   background: rgba(30, 31, 46, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 32px;
+  margin: 0 auto 28px;
   box-shadow: 0 0 20px rgba(96, 165, 250, 0.1);
 }
 
@@ -103,11 +103,11 @@ body {
 .input-styled {
   display: block;
   width: 100%;
-  height: 52px;
+  height: 48px; /* Reduced height */
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 0 16px 0 48px;
+  border-radius: 12px;
+  padding: 0 16px 0 44px;
   color: white;
   font-size: 14px;
   transition: all 0.2s ease;
@@ -139,13 +139,13 @@ body {
 /* Buttons */
 .btn-submit {
   width: 100%;
-  height: 52px;
+  height: 48px; /* Reduced from 52px */
   background: linear-gradient(90deg, #9333ea 0%, #06b6d4 100%);
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   color: white;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   transition: opacity 0.2s ease;
   margin-top: 8px;
@@ -182,10 +182,10 @@ body {
 
 .btn-google {
   width: 100%;
-  height: 52px;
+  height: 48px; /* Reduced from 52px */
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,16 +210,16 @@ body {
 
 /* Typography */
 .heading {
-  font-size: 28px;
+  font-size: 24px; /* Slightly smaller */
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: white;
 }
 
 .subheading {
-  font-size: 15px;
+  font-size: 14px;
   color: #94a3b8;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .footer-text {

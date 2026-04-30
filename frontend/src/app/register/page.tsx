@@ -43,12 +43,12 @@ export default function RegisterPage() {
       <div className="page-glow" />
       
       <div className="auth-card">
-        <div className="text-center mb-6">
+        <div className="text-center">
           <div className="icon-box">
             <div className="dot-icon" />
           </div>
-          <h1 className="heading !text-3xl">Create your account</h1>
-          <p className="subheading !text-base">Join the platform today</p>
+          <h1 className="heading">Create your account</h1>
+          <p className="subheading">Join the platform today</p>
         </div>
 
         {error && (
@@ -57,7 +57,7 @@ export default function RegisterPage() {
           </div>
         )}
 
-        <form onSubmit={handleRegister} className="space-y-6">
+        <form onSubmit={handleRegister} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="label-text">First name</label>
