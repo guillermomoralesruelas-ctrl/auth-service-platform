@@ -48,12 +48,12 @@ export default function LoginPage() {
       <div className="page-glow" />
       
       <div className="auth-card">
-        <div className="text-center">
+        <div className="text-center mb-6">
           <div className="icon-box">
             <div className="dot-icon" />
           </div>
-          <h1 className="heading">Welcome back</h1>
-          <p className="subheading">Sign in to continue to your portfolio</p>
+          <h1 className="heading !text-3xl">Welcome back</h1>
+          <p className="subheading !text-base">Sign in to continue to your portfolio</p>
         </div>
 
         {error && (
@@ -62,7 +62,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label className="label-text">Email</label>
             <div className="input-container">
