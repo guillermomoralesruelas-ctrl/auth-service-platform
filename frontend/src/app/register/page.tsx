@@ -57,9 +57,9 @@ export default function RegisterPage() {
           </div>
         )}
 
-        <form onSubmit={handleRegister} className="w-full space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <div className="w-full">
+            <div>
               <label className="label-text">First name</label>
               <div className="input-container">
                 <User className="input-icon" size={18} />
@@ -73,7 +73,7 @@ export default function RegisterPage() {
                 />
               </div>
             </div>
-            <div className="w-full">
+            <div>
               <label className="label-text">Last name</label>
               <div className="input-container">
                 <input 
@@ -88,7 +88,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <div className="w-full">
+          <div>
             <label className="label-text">Email</label>
             <div className="input-container">
               <Mail className="input-icon" size={18} />
@@ -103,7 +103,7 @@ export default function RegisterPage() {
             </div>
           </div>
           
-          <div className="w-full">
+          <div>
             <label className="label-text">Password</label>
             <div className="input-container">
               <Lock className="input-icon" size={18} />
