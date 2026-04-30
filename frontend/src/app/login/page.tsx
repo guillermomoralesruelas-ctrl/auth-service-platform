@@ -62,8 +62,8 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleLogin}>
-          <div>
+        <form onSubmit={handleLogin} className="w-full space-y-4">
+          <div className="w-full">
             <label className="label-text">Email</label>
             <div className="input-container">
               <Mail className="input-icon" size={18} />
@@ -78,7 +78,7 @@ export default function LoginPage() {
             </div>
           </div>
           
-          <div>
+          <div className="w-full">
             <div className="flex justify-between items-center">
               <label className="label-text">Password</label>
               <Link href="#" className="label-text text-[12px] hover:text-white transition-colors">Forgot?</Link>
