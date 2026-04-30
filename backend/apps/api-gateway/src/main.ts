@@ -3,20 +3,34 @@ import { ApiGatewayModule } from './api-gateway.module';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);
 
-  // Security headers
-  app.use(helmet());
+  // Security headers - Disable CSP for Swagger to work properly in some environments
+  app.use(helmet({
+    contentSecurityPolicy: false,
+  }));
 
-  // Request logging (auditoría)
+  // Request logging
   app.use(morgan('combined'));
 
   // CORS
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3003',
+    origin: process.env.FRONTEND_URL || '*',
     credentials: true,
   });
+
+  // Swagger setup
+  const config = new DocumentBuilder()
+    .setTitle('Auth Service - Unified API Gateway')
+    .setDescription('Unified interface for Auth, User, and Identity services')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
 
   const port = process.env.PORT || process.env.API_GATEWAY_PORT || 3000;
   await app.listen(port, '0.0.0.0');
