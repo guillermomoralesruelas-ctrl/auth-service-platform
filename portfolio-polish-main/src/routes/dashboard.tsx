@@ -102,10 +102,13 @@ function DashboardPage() {
               </div>
             </div>
 
-            <button className="w-full mt-6 py-2.5 bg-gradient-to-r from-violet-500 to-cyan-400 text-white rounded-lg text-sm font-semibold hover:opacity-90 shadow-lg shadow-violet-500/30 transition flex items-center justify-center gap-2">
+            <Link
+              to="/profile/edit"
+              className="w-full mt-6 py-2.5 bg-gradient-to-r from-violet-500 to-cyan-400 text-white rounded-lg text-sm font-semibold hover:opacity-90 shadow-lg shadow-violet-500/30 transition flex items-center justify-center gap-2"
+            >
               <Pencil className="w-3.5 h-3.5" />
               Edit Profile
-            </button>
+            </Link>
           </section>
 
           <p className="text-[10px] text-zinc-600 text-center mt-10 tracking-[0.2em]">
