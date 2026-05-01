@@ -1,6 +1,6 @@
 'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { api } from '../../lib/axios';
@@ -8,11 +8,33 @@ import { Lock, Mail, Loader2, Eye } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const accessToken = searchParams.get('access_token');
+    const refreshToken = searchParams.get('refresh_token');
+
+    if (accessToken && refreshToken) {
+      setLoading(true);
+      Cookies.set('access_token', accessToken);
+      Cookies.set('refresh_token', refreshToken);
+      
+      api.get('/users/me', {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      }).then(userRes => {
+        localStorage.setItem('user_id', userRes.data.id);
+        router.push('/dashboard');
+      }).catch(() => {
+        setError('Error al autenticar con Google');
+        setLoading(false);
+      });
+    }
+  }, [searchParams, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

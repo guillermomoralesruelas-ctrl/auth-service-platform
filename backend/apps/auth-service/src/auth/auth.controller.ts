@@ -1,4 +1,6 @@
-import { Controller, Post, Get, Body, HttpCode, HttpStatus, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Body, HttpCode, HttpStatus, Req, UseGuards, Res } from '@nestjs/common';
+import { Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -9,7 +11,10 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Post('register')
   @ApiOperation({ summary: 'Registrar un nuevo usuario' })
@@ -55,7 +60,11 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   @ApiOperation({ summary: 'Callback de Google OAuth2' })
-  async googleAuthRedirect(@Req() req) {
-    return this.authService.googleLogin(req);
+  async googleAuthRedirect(@Req() req, @Res() res: Response) {
+    const result = await this.authService.googleLogin(req);
+    const frontendUrl = this.configService.get('FRONTEND_URL') || 'http://localhost:3000';
+    
+    // Redirigir al frontend con los tokens en la URL para que el cliente los procese
+    return res.redirect(`${frontendUrl}/login?access_token=${result.access_token}&refresh_token=${result.refresh_token}`);
   }
 }
