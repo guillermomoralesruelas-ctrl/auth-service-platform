@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { RedisModule } from '../../../libs/common/src';
 import { AuthMiddleware } from './middleware/auth.middleware';
-import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 import { AppController } from './app.controller';
 
@@ -49,7 +49,6 @@ export class ApiGatewayModule implements NestModule {
           target: this.configService.get<string>('AUTH_SERVICE_URL') || `http://localhost:${this.configService.get<number>('AUTH_SERVICE_PORT', 3001)}`,
           changeOrigin: true,
           pathRewrite: { '^/api/auth': '/auth' },
-          onProxyReq: fixRequestBody,
         }),
       )
       .forRoutes({ path: 'api/auth/*', method: RequestMethod.ALL });
@@ -61,7 +60,6 @@ export class ApiGatewayModule implements NestModule {
           target: this.configService.get<string>('USER_SERVICE_URL') || `http://localhost:${this.configService.get<number>('USER_SERVICE_PORT', 3002)}`,
           changeOrigin: true,
           pathRewrite: { '^/api/users': '/users' },
-          onProxyReq: fixRequestBody,
         }),
       )
       .forRoutes({ path: 'api/users/*', method: RequestMethod.ALL });

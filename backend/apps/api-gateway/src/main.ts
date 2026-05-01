@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ApiGatewayModule);
+  const app = await NestFactory.create(ApiGatewayModule, { bodyParser: false });
 
   // Security headers - Disable CSP for Swagger to work properly in some environments
   app.use(helmet({
