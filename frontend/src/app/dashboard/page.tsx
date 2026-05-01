@@ -31,17 +31,14 @@ export default function DashboardPage() {
     fetchUser();
   }, [router]);
 
-  const handleLogout = async () => {
-    try {
-      await api.post('/auth/logout');
-    } catch (e) {
-      console.error(e);
-    } finally {
-      Cookies.remove('access_token');
-      Cookies.remove('refresh_token');
-      localStorage.removeItem('user_id');
-      router.push('/login');
-    }
+  const handleLogout = () => {
+    // Fire and forget backend logout to prevent UI hanging
+    api.post('/auth/logout').catch(console.error);
+    
+    Cookies.remove('access_token', { path: '/' });
+    Cookies.remove('refresh_token', { path: '/' });
+    localStorage.removeItem('user_id');
+    router.push('/login');
   };
 
   if (loading) {
