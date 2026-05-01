@@ -1,56 +1,31 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Cookies from 'js-cookie';
-import { api } from '../../lib/axios';
-import { Settings, LogOut, User as UserIcon, Mail, Fingerprint, CircleDot, Pencil } from 'lucide-react';
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Settings, LogOut, User, Mail, Fingerprint, CircleDot, Pencil } from "lucide-react";
 
-export default function DashboardPage() {
-  const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+export const Route = createFileRoute("/dashboard")({
+  component: DashboardPage,
+  head: () => ({
+    meta: [
+      { title: "Dashboard — Portfolio" },
+      { name: "description", content: "Your portfolio workspace overview." },
+    ],
+  }),
+});
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data } = await api.get('/users/me');
-        setUser({
-          ...data,
-          name: `${data.firstName} ${data.lastName}`,
-          role: data.roles?.map((r: any) => r.name).join(', ') || 'USER',
-          status: 'Active'
-        });
-      } catch (err) {
-        console.error('Failed to fetch user', err);
-        router.push('/login');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, [router]);
+function DashboardPage() {
+  const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await api.post('/auth/logout');
-    } catch (e) {
-      console.error(e);
-    } finally {
-      Cookies.remove('access_token');
-      Cookies.remove('refresh_token');
-      localStorage.removeItem('user_id');
-      router.push('/login');
-    }
+  // Mock user data — replace with real auth state when backend is wired
+  const user = {
+    name: "Guillermo Morales Ruelas",
+    role: "USER",
+    email: "guillermomoralesruelas@gmail.com",
+    id: "85524f0a-8b57-4b61-916e-14244bfa10b7",
+    status: "Active",
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#0a0a14]">
-        <div className="w-16 h-16 border-4 border-violet-500/20 border-t-violet-500 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
+  const handleLogout = () => {
+    navigate({ to: "/" });
+  };
 
   return (
     <main className="min-h-dvh bg-[#0a0a14] relative overflow-hidden font-sans text-white">
@@ -73,7 +48,7 @@ export default function DashboardPage() {
         {/* Top bar */}
         <header className="border-b border-white/5 backdrop-blur-xl bg-white/[0.02]">
           <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-2.5 group">
+            <Link to="/dashboard" className="flex items-center gap-2.5 group">
               <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-400 p-[1.5px]">
                 <div className="w-full h-full rounded-[7px] bg-[#0a0a14] flex items-center justify-center">
                   <div className="w-3.5 h-3.5 rounded-sm bg-gradient-to-br from-violet-400 to-cyan-300" />
@@ -85,7 +60,7 @@ export default function DashboardPage() {
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10">
                 <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500/40 to-cyan-400/40 flex items-center justify-center">
-                  <UserIcon className="w-3.5 h-3.5 text-white" />
+                  <User className="w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="leading-tight">
                   <div className="text-xs font-medium text-white">{user.name}</div>
@@ -127,10 +102,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <button 
-              onClick={() => router.push('/profile')}
-              className="w-full mt-6 py-2.5 bg-gradient-to-r from-violet-500 to-cyan-400 text-white rounded-lg text-sm font-semibold hover:opacity-90 shadow-lg shadow-violet-500/30 transition flex items-center justify-center gap-2"
-            >
+            <button className="w-full mt-6 py-2.5 bg-gradient-to-r from-violet-500 to-cyan-400 text-white rounded-lg text-sm font-semibold hover:opacity-90 shadow-lg shadow-violet-500/30 transition flex items-center justify-center gap-2">
               <Pencil className="w-3.5 h-3.5" />
               Edit Profile
             </button>
