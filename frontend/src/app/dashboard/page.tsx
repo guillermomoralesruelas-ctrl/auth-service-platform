@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { api } from '../../lib/axios';
-import { LogOut, User as UserIcon, Settings, Activity, Shield, Globe, Terminal } from 'lucide-react';
+import { LogOut, User as UserIcon, Settings, Activity, Shield, Globe, Terminal, Mail } from 'lucide-react';
 
 export default function DashboardPage() {
   const router = useRouter();
