@@ -48,37 +48,37 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen pb-20 flex flex-col items-center relative">
+    <div className="min-h-screen bg-[#0b0c14] relative overflow-hidden flex flex-col items-center">
       <div className="page-bg" />
       <div className="page-glow" />
 
       {/* Navigation */}
-      <header className="w-full max-w-[1400px] px-12 py-8 flex justify-between items-center z-10">
-        <div className="flex items-center gap-3">
-          <div className="icon-box !m-0 !w-[42px] !h-[42px] !rounded-xl !bg-[#1e1f2e]/80">
-            <div className="dot-icon !w-2 !h-2" />
+      <header className="w-full max-w-[1440px] px-12 py-10 flex justify-between items-start z-50">
+        <div className="flex items-center gap-4">
+          <div className="w-[44px] h-[44px] bg-[#1a1b26]/80 backdrop-blur-xl border border-white/10 rounded-xl flex items-center justify-center shadow-2xl">
+            <div className="w-2.5 h-2.5 bg-[#60a5fa] rounded-full shadow-[0_0_15px_#60a5fa]" />
           </div>
-          <span className="text-xl font-bold text-white tracking-tight">Portfolio</span>
+          <span className="text-[20px] font-bold text-white tracking-tight">Portfolio</span>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-4 px-5 py-2.5 bg-[#1a1b26]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl">
+          <div className="flex items-center gap-4 pl-5 pr-6 py-2.5 bg-[#1a1b26]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl">
             <div className="w-9 h-9 rounded-full bg-[#3b3c54] flex items-center justify-center border border-white/5">
               <UserIcon className="text-white/80" size={18} />
             </div>
-            <div className="pr-2">
-              <p className="text-[14px] font-bold text-white leading-tight">
+            <div className="flex flex-col">
+              <span className="text-[14px] font-bold text-white leading-none mb-1">
                 {user?.firstName} {user?.lastName}
-              </p>
-              <p className="text-[10px] text-muted font-bold uppercase tracking-widest mt-0.5">
+              </span>
+              <span className="text-[10px] text-white/40 font-black uppercase tracking-widest leading-none">
                 {user?.roles?.map((r: any) => r.name).join(', ')}
-              </p>
+              </span>
             </div>
           </div>
           
           <button 
             onClick={handleLogout}
-            className="w-11 h-11 flex items-center justify-center bg-[#1a1b26]/80 backdrop-blur-xl border border-white/10 rounded-xl text-white/40 hover:text-white transition-all shadow-xl hover:bg-white/5"
+            className="w-11 h-11 flex items-center justify-center bg-[#1a1b26]/80 backdrop-blur-xl border border-white/10 rounded-xl text-white/40 hover:text-white transition-all shadow-2xl hover:bg-white/5 active:scale-95"
             title="Logout"
           >
             <LogOut size={20} />
@@ -86,60 +86,62 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* Main Content - Concentrated for the "Profile Summary" look */}
-      <main className="w-full max-w-[560px] px-6 mt-16 z-10">
-        <div className="auth-card !w-full !min-h-0 !py-12 !px-10 !bg-[#161722]/80 !rounded-[32px] !border-white/10">
-          <div className="flex items-center gap-3 mb-10">
-            <Settings className="text-[#60a5fa]" size={24} />
-            <h2 className="text-xl font-bold text-white tracking-tight">Profile Summary</h2>
+      {/* Main Content */}
+      <main className="w-full max-w-lg px-6 flex flex-col items-center mt-6 z-10">
+        <div className="w-full bg-[#161722]/60 backdrop-blur-[32px] border border-white/10 rounded-[32px] p-12 shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
+          <div className="flex items-center gap-4 mb-12">
+            <Settings className="text-[#60a5fa]" size={26} />
+            <h2 className="text-[22px] font-bold text-white tracking-tight">Profile Summary</h2>
           </div>
 
-          <div className="space-y-8">
-            <div className="group">
-              <div className="flex items-center gap-2.5 mb-3">
-                <Mail className="text-white/30 group-hover:text-[#60a5fa] transition-colors" size={15} />
-                <p className="text-[11px] text-white/30 uppercase tracking-[0.15em] font-black">Email</p>
+          <div className="space-y-10">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5 ml-1">
+                <Mail className="text-white/20" size={16} />
+                <span className="text-[11px] text-white/30 uppercase tracking-[0.2em] font-black">Email</span>
               </div>
-              <div className="bg-[#1e1f2e]/60 p-4.5 px-6 rounded-2xl border border-white/5 group-hover:border-[#60a5fa]/20 transition-all">
-                <p className="text-[15px] font-medium text-white/90 truncate">{user?.email}</p>
+              <div className="bg-[#0b0c14]/40 p-5 px-7 rounded-2xl border border-white/5 shadow-inner">
+                <p className="text-[15px] font-medium text-white/90 truncate tracking-wide">{user?.email}</p>
               </div>
             </div>
 
-            <div className="group">
-              <div className="flex items-center gap-2.5 mb-3">
-                <Fingerprint className="text-white/30 group-hover:text-[#60a5fa] transition-colors" size={15} />
-                <p className="text-[11px] text-white/30 uppercase tracking-[0.15em] font-black">User ID</p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5 ml-1">
+                <Fingerprint className="text-white/20" size={16} />
+                <span className="text-[11px] text-white/30 uppercase tracking-[0.2em] font-black">User ID</span>
               </div>
-              <div className="bg-[#1e1f2e]/60 p-4.5 px-6 rounded-2xl border border-white/5 group-hover:border-[#60a5fa]/20 transition-all">
+              <div className="bg-[#0b0c14]/40 p-5 px-7 rounded-2xl border border-white/5 shadow-inner">
                 <p className="text-[12px] text-white/40 truncate font-mono tracking-wider">
                   {user?.id}
                 </p>
               </div>
             </div>
 
-            <div className="group">
-              <div className="flex items-center gap-2.5 mb-3">
-                <Circle className="text-white/30 group-hover:text-[#10b981] transition-colors" size={15} />
-                <p className="text-[11px] text-white/30 uppercase tracking-[0.15em] font-black">Status</p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5 ml-1">
+                <Circle className="text-white/20" size={16} />
+                <span className="text-[11px] text-white/30 uppercase tracking-[0.2em] font-black">Status</span>
               </div>
-              <div className="flex items-center gap-2.5 px-4 py-2 bg-[#10b981]/10 border border-[#10b981]/20 rounded-full w-fit">
-                <span className="w-2 h-2 bg-[#10b981] rounded-full shadow-[0_0_10px_#10b981]" />
-                <span className="text-[11px] font-black text-[#10b981] tracking-wide uppercase">Active</span>
+              <div className="flex items-center gap-3 px-5 py-2.5 bg-[#10b981]/10 border border-[#10b981]/20 rounded-full w-fit shadow-[0_0_20px_rgba(16,185,129,0.05)]">
+                <div className="w-2 h-2 bg-[#10b981] rounded-full shadow-[0_0_12px_#10b981]" />
+                <span className="text-[11px] font-black text-[#10b981] tracking-widest uppercase">Active</span>
               </div>
             </div>
           </div>
 
           <button 
             onClick={() => router.push('/profile')}
-            className="btn-submit !h-[60px] !mt-12 !flex items-center justify-center gap-3 !rounded-2xl !text-[16px] !font-bold hover:scale-[1.01] active:scale-[0.99] transition-all shadow-[0_10px_25px_rgba(147,51,234,0.3)]"
+            className="w-full h-[64px] mt-14 bg-gradient-to-r from-[#9333ea] to-[#06b6d4] rounded-2xl flex items-center justify-center gap-3 text-[16px] font-bold text-white shadow-[0_15px_30px_rgba(147,51,234,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
           >
             <Pencil size={20} />
             Edit Profile
           </button>
         </div>
 
-        <div className="w-full flex justify-center mt-16">
-          <p className="aes-text !m-0">Protected by AES-256 Encryption</p>
+        <div className="mt-16 opacity-20">
+          <p className="text-[10px] text-white font-black tracking-[0.3em] uppercase">
+            Protected by AES-256 Encryption
+          </p>
         </div>
       </main>
     </div>
