@@ -16,6 +16,12 @@ export class UsersController {
     return this.usersService.findMe(req.user.sub);
   }
 
+  @Put('me')
+  @ApiOperation({ summary: 'Actualizar perfil del usuario actual' })
+  updateMe(@Req() req, @Body() updateData: { firstName?: string, lastName?: string }) {
+    return this.usersService.updateProfile(req.user.sub, updateData);
+  }
+
   @Get()
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Listar todos los usuarios (Solo Admin)' })

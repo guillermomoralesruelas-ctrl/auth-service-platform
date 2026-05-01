@@ -22,6 +22,19 @@ export class UsersService {
     return result;
   }
 
+  async updateProfile(id: string, updateData: { firstName?: string, lastName?: string }): Promise<any> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('Usuario no encontrado');
+    
+    if (updateData.firstName !== undefined) user.firstName = updateData.firstName;
+    if (updateData.lastName !== undefined) user.lastName = updateData.lastName;
+    
+    await this.usersRepository.save(user);
+    
+    const { passwordHash, ...result } = user;
+    return result;
+  }
+
   async findAll(): Promise<any[]> {
     const users = await this.usersRepository.find({ relations: ['roles'] });
     return users.map(user => {

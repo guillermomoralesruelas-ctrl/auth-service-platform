@@ -33,14 +33,18 @@ export default function ProfilePage() {
     fetchUser();
   }, [router]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    // Mock save delay since backend doesn't have an update endpoint yet
-    setTimeout(() => {
-      setSaving(false);
+    try {
+      await api.put('/users/me', { firstName, lastName });
       router.push('/dashboard');
-    }, 1000);
+    } catch (err) {
+      console.error('Failed to update profile', err);
+      alert('Failed to update profile. Please try again.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (loading) {
