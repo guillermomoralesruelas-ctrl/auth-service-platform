@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { api } from '../../lib/axios';
-import { LogOut, User as UserIcon, Settings, Mail, Pencil, Fingerprint, Circle } from 'lucide-react';
+import { LogOut, User as UserIcon, Settings, Mail, Pencil, Fingerprint, CircleDot } from 'lucide-react';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -40,112 +40,121 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="page-bg" />
-        <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+      <div className="flex items-center justify-center min-h-screen bg-[#0a0a14]">
+        <div className="w-16 h-16 border-4 border-violet-500/20 border-t-violet-500 rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0c14] relative flex flex-col items-center overflow-x-hidden">
-      <div className="page-bg" />
-      <div className="page-glow" />
+    <main className="min-h-screen bg-[#0a0a14] relative overflow-hidden font-sans text-white">
+      {/* Background Effects */}
+      <div className="pointer-events-none absolute top-0 left-1/4 w-[600px] h-[600px] bg-violet-600/25 rounded-full blur-[140px]"></div>
+      <div className="pointer-events-none absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[140px]"></div>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,transparent_0%,#0a0a14_75%)]"></div>
+      <div 
+        className="pointer-events-none absolute inset-0 opacity-[0.03]" 
+        style={{
+          backgroundImage: 'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)',
+          backgroundSize: '48px 48px'
+        }}
+      ></div>
 
-      {/* Navigation */}
-      <header className="w-full max-w-[1200px] px-8 py-8 flex justify-between items-center z-50">
-        {/* Left Side: Logo & Portfolio */}
-        <div className="flex items-center gap-4">
-          <div className="w-[42px] h-[42px] bg-[#161722]/80 backdrop-blur-md border border-white/10 rounded-xl flex items-center justify-center shadow-lg">
-            <div className="w-2.5 h-2.5 bg-[#60a5fa] rounded-full shadow-[0_0_12px_#60a5fa]" />
-          </div>
-          <span className="text-[18px] font-bold text-white tracking-tight">Portfolio</span>
-        </div>
-
-        {/* Right Side: User Pill & Logout */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-3 pl-3 pr-5 py-2 bg-[#161722]/40 backdrop-blur-md border border-white/10 rounded-[20px] shadow-lg">
-            <div className="w-8 h-8 rounded-full bg-[#3b3c54] flex items-center justify-center border border-white/5">
-              <UserIcon className="text-[#a5b4fc]" size={16} />
-            </div>
-            <div className="flex flex-col justify-center">
-              <span className="text-[13px] font-semibold text-white/90 leading-tight mb-[2px]">
-                {user?.firstName} {user?.lastName}
-              </span>
-              <span className="text-[9px] text-white/40 font-bold uppercase tracking-widest leading-none">
-                {user?.roles?.map((r: any) => r.name).join(', ') || 'USER'}
-              </span>
-            </div>
-          </div>
-          
-          <button 
-            onClick={handleLogout}
-            className="w-[42px] h-[42px] flex items-center justify-center bg-[#161722]/40 backdrop-blur-md border border-white/10 rounded-xl text-white/50 hover:text-white transition-all shadow-lg hover:bg-white/5 active:scale-95"
-            title="Logout"
-          >
-            <LogOut size={18} strokeWidth={2.5} />
-          </button>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="w-full max-w-[580px] px-6 mt-12 flex flex-col items-center z-10">
-        <div className="w-full bg-[#161722]/50 backdrop-blur-[24px] border border-white/10 rounded-[28px] p-10 shadow-[0_30px_60px_rgba(0,0,0,0.4)]">
-          <div className="flex items-center gap-3 mb-10">
-            <Settings className="text-[#60a5fa]" size={22} />
-            <h2 className="text-[18px] font-bold text-white tracking-tight">Profile Summary</h2>
-          </div>
-
-          <div className="space-y-8">
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-2.5 ml-1">
-                <Mail className="text-white/30" size={14} />
-                <span className="text-[10px] text-white/40 uppercase tracking-[0.15em] font-bold">Email</span>
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Navigation */}
+        <header className="border-b border-white/5 backdrop-blur-xl bg-white/[0.02]">
+          <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-400 p-[1.5px]">
+                <div className="w-full h-full rounded-[7px] bg-[#0a0a14] flex items-center justify-center">
+                  <div className="w-3.5 h-3.5 rounded-sm bg-gradient-to-br from-violet-400 to-cyan-300"></div>
+                </div>
               </div>
-              <div className="bg-[#1a1b26]/50 p-4 px-5 rounded-xl border border-white/5 shadow-inner">
-                <p className="text-[14px] font-medium text-white/90 truncate tracking-wide">{user?.email}</p>
-              </div>
+              <span className="text-sm font-semibold tracking-tight">Portfolio</span>
             </div>
 
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-2.5 ml-1">
-                <Fingerprint className="text-white/30" size={14} />
-                <span className="text-[10px] text-white/40 uppercase tracking-[0.15em] font-bold">User ID</span>
+            {/* Right Side */}
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500/40 to-cyan-400/40 flex items-center justify-center">
+                  <UserIcon className="w-3.5 h-3.5 text-white" />
+                </div>
+                <div className="leading-tight">
+                  <div className="text-xs font-medium text-white">
+                    {user?.firstName} {user?.lastName}
+                  </div>
+                  <div className="text-[10px] text-zinc-500 tracking-wider">
+                    {user?.roles?.map((r: any) => r.name).join(', ') || 'USER'}
+                  </div>
+                </div>
               </div>
-              <div className="bg-[#1a1b26]/50 p-4 px-5 rounded-xl border border-white/5 shadow-inner">
-                <p className="text-[12px] text-white/50 truncate font-mono tracking-wider">
+
+              <button 
+                onClick={handleLogout}
+                title="Sign out"
+                className="w-9 h-9 rounded-lg bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/20 flex items-center justify-center transition"
+              >
+                <LogOut className="w-4 h-4 text-zinc-300" />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <div className="max-w-6xl mx-auto px-6 py-16 flex flex-col items-center justify-center flex-grow">
+          <section className="w-full max-w-md backdrop-blur-2xl bg-white/[0.03] border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/30">
+            <div className="flex items-center gap-2 mb-5">
+              <Settings className="w-4 h-4 text-cyan-300" />
+              <h2 className="text-sm font-semibold tracking-tight">Profile Summary</h2>
+            </div>
+
+            <div className="space-y-4">
+              {/* Email */}
+              <div>
+                <div className="flex items-center gap-1.5 text-[10px] font-medium text-zinc-400 uppercase tracking-wider mb-1.5">
+                  <Mail className="w-3.5 h-3.5" /> Email
+                </div>
+                <div className="px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-zinc-200 font-mono text-xs truncate">
+                  {user?.email}
+                </div>
+              </div>
+
+              {/* User ID */}
+              <div>
+                <div className="flex items-center gap-1.5 text-[10px] font-medium text-zinc-400 uppercase tracking-wider mb-1.5">
+                  <Fingerprint className="w-3.5 h-3.5" /> User ID
+                </div>
+                <div className="px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-zinc-200 font-mono text-[11px] truncate">
                   {user?.id}
-                </p>
+                </div>
+              </div>
+
+              {/* Status */}
+              <div>
+                <div className="flex items-center gap-1.5 text-[10px] font-medium text-zinc-400 uppercase tracking-wider mb-1.5">
+                  <CircleDot className="w-3.5 h-3.5" /> Status
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgb(52,211,153)]"></span>
+                  <span className="text-xs font-medium text-emerald-300">Active</span>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-2.5 ml-1">
-                <Circle className="text-white/30" size={14} />
-                <span className="text-[10px] text-white/40 uppercase tracking-[0.15em] font-bold">Status</span>
-              </div>
-              <div className="flex items-center gap-2.5 px-4 py-2 bg-[#10b981]/10 border border-[#10b981]/20 rounded-full w-fit">
-                <div className="w-1.5 h-1.5 bg-[#10b981] rounded-full shadow-[0_0_10px_#10b981]" />
-                <span className="text-[11px] font-bold text-[#10b981] tracking-widest uppercase">Active</span>
-              </div>
-            </div>
-          </div>
+            <button 
+              onClick={() => router.push('/profile')}
+              className="w-full mt-6 py-2.5 bg-gradient-to-r from-violet-500 to-cyan-400 text-white rounded-lg text-sm font-semibold hover:opacity-90 shadow-lg shadow-violet-500/30 transition flex items-center justify-center gap-2"
+            >
+              <Pencil className="w-3.5 h-3.5" /> Edit Profile
+            </button>
+          </section>
 
-          <button 
-            onClick={() => router.push('/profile')}
-            className="w-full h-[56px] mt-12 bg-gradient-to-r from-[#8b5cf6] to-[#0ea5e9] rounded-xl flex items-center justify-center gap-2 text-[15px] font-bold text-white shadow-[0_10px_20px_rgba(139,92,246,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300"
-          >
-            <Pencil size={18} />
-            Edit Profile
-          </button>
-        </div>
-
-        <div className="mt-14 opacity-30">
-          <p className="text-[9px] text-white font-bold tracking-[0.25em] uppercase">
-            Protected by AES-256 Encryption
+          <p className="text-[10px] text-zinc-600 text-center mt-10 tracking-[0.2em]">
+            PROTECTED BY AES-256 ENCRYPTION
           </p>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
