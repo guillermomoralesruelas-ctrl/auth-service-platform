@@ -182,7 +182,7 @@ export class AuthService {
     const resetLink = `${frontendUrl}/reset-password?token=${resetToken}`;
 
     try {
-      await this.resend.emails.send({
+      const { data, error } = await this.resend.emails.send({
         from: 'Portfolio <onboarding@resend.dev>',
         to: user.email,
         subject: 'Recuperación de Contraseña - Portfolio',
@@ -199,7 +199,13 @@ export class AuthService {
           </div>
         `,
       });
-      console.log(`[DEV] Password reset link for ${email}: ${resetLink}`);
+
+      if (error) {
+        console.error('Resend API returned an error:', error);
+        console.log(`[DEV] (Email failed) Password reset link for ${email}: ${resetLink}`);
+      } else {
+        console.log(`[DEV] Password reset link sent successfully to ${email}. ID: ${data?.id}`);
+      }
     } catch (error) {
       console.error('Error sending email:', error);
       console.log(`[DEV] (Email failed) Password reset link for ${email}: ${resetLink}`);
