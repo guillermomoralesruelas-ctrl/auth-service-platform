@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
@@ -25,6 +25,28 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+
+    if (accessToken && refreshToken) {
+      Cookies.set('access_token', accessToken, { path: '/' });
+      Cookies.set('refresh_token', refreshToken, { path: '/' });
+      
+      try {
+        const decoded: any = jwtDecode(accessToken);
+        localStorage.setItem('user_id', decoded.sub);
+      } catch (err) {
+        console.error('Failed to decode token from Google login:', err);
+      }
+      
+      // Clean up URL and navigate
+      window.history.replaceState({}, document.title, '/dashboard');
+      router.push('/dashboard');
+    }
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
