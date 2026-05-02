@@ -51,7 +51,7 @@ export default function LoginPage() {
   const handleGoogleLogin = () => {
     const isProduction = process.env.NODE_ENV === 'production';
     const backendUrl = isProduction 
-      ? 'https://api-gateway-production.up.railway.app' 
+      ? 'https://api-gateway-auth-service.up.railway.app' 
       : 'http://localhost:8080';
     
     window.location.href = `${backendUrl}/api/auth/google`;
