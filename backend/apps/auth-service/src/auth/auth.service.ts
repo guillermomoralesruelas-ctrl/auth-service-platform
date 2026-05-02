@@ -10,6 +10,7 @@ import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuidv4 } from 'uuid';
 import { Resend } from 'resend';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class AuthService {
@@ -24,9 +25,23 @@ export class AuthService {
   ) {
     const resendApiKey = this.configService.get<string>('RESEND_API_KEY');
     this.resend = resendApiKey ? new Resend(resendApiKey) : new Resend('re_aSGrHh8h_3DfPzwu6oQ7xhUYq6JmX2B84');
+
+    this.emailProvider = this.configService.get<string>('EMAIL_PROVIDER') || 'smtp';
+    
+    this.nodemailerTransporter = nodemailer.createTransport({
+      host: this.configService.get<string>('SMTP_HOST') || 'smtp.gmail.com',
+      port: parseInt(this.configService.get<string>('SMTP_PORT') || '465', 10),
+      secure: true, // true for 465, false for other ports
+      auth: {
+        user: this.configService.get<string>('SMTP_USER') || '',
+        pass: this.configService.get<string>('SMTP_PASS') || '',
+      },
+    });
   }
 
   private resend: Resend;
+  private nodemailerTransporter: nodemailer.Transporter;
+  private emailProvider: string;
 
   async register(registerDto: RegisterDto): Promise<any> {
     const existingUser = await this.usersRepository.findOne({ where: { email: registerDto.email } });
@@ -167,6 +182,39 @@ export class AuthService {
     };
   }
 
+  private async sendEmail(to: string, subject: string, html: string): Promise<void> {
+    if (this.emailProvider === 'resend') {
+      const { data, error } = await this.resend.emails.send({
+        from: 'Portfolio <onboarding@resend.dev>',
+        to,
+        subject,
+        html,
+      });
+
+      if (error) {
+        console.error('Resend API returned an error:', error);
+        throw new Error('Failed to send email via Resend');
+      } else {
+        console.log(`[DEV] Password reset link sent successfully via Resend to ${to}. ID: ${data?.id}`);
+      }
+    } else {
+      // Use Nodemailer by default (smtp)
+      const smtpUser = this.configService.get<string>('SMTP_USER');
+      if (!smtpUser) {
+        console.log(`[DEV-WARNING] SMTP_USER is not configured. Email will not be sent physically.`);
+        throw new Error('SMTP credentials missing');
+      }
+
+      await this.nodemailerTransporter.sendMail({
+        from: `"Portfolio Auth" <${smtpUser}>`,
+        to,
+        subject,
+        html,
+      });
+      console.log(`[DEV] Password reset link sent successfully via Nodemailer to ${to}.`);
+    }
+  }
+
   async forgotPassword(email: string): Promise<any> {
     const user = await this.usersRepository.findOne({ where: { email } });
     if (!user) {
@@ -181,31 +229,21 @@ export class AuthService {
     const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3000';
     const resetLink = `${frontendUrl}/reset-password?token=${resetToken}`;
 
-    try {
-      const { data, error } = await this.resend.emails.send({
-        from: 'Portfolio <onboarding@resend.dev>',
-        to: user.email,
-        subject: 'Recuperación de Contraseña - Portfolio',
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background-color: #0a0a14; color: white; padding: 40px; border-radius: 10px;">
-            <h1 style="color: white; margin-bottom: 20px;">Recuperación de Contraseña</h1>
-            <p style="color: #a1a1aa; line-height: 1.6;">Hola ${user.firstName || 'Usuario'},</p>
-            <p style="color: #a1a1aa; line-height: 1.6;">Has solicitado restablecer tu contraseña. Haz clic en el botón de abajo para crear una nueva:</p>
-            <div style="margin: 30px 0;">
-              <a href="${resetLink}" style="display: inline-block; padding: 12px 24px; background: linear-gradient(to right, #8b5cf6, #22d3ee); color: white; font-weight: 600; text-decoration: none; border-radius: 8px;">Restablecer Contraseña</a>
-            </div>
-            <p style="color: #a1a1aa; font-size: 12px; margin-top: 30px;">Este enlace expirará en 15 minutos.</p>
-            <p style="color: #a1a1aa; font-size: 12px;">Si no fuiste tú, puedes ignorar este correo de forma segura.</p>
-          </div>
-        `,
-      });
+    const htmlContent = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background-color: #0a0a14; color: white; padding: 40px; border-radius: 10px;">
+        <h1 style="color: white; margin-bottom: 20px;">Recuperación de Contraseña</h1>
+        <p style="color: #a1a1aa; line-height: 1.6;">Hola ${user.firstName || 'Usuario'},</p>
+        <p style="color: #a1a1aa; line-height: 1.6;">Has solicitado restablecer tu contraseña. Haz clic en el botón de abajo para crear una nueva:</p>
+        <div style="margin: 30px 0;">
+          <a href="${resetLink}" style="display: inline-block; padding: 12px 24px; background: linear-gradient(to right, #8b5cf6, #22d3ee); color: white; font-weight: 600; text-decoration: none; border-radius: 8px;">Restablecer Contraseña</a>
+        </div>
+        <p style="color: #a1a1aa; font-size: 12px; margin-top: 30px;">Este enlace expirará en 15 minutos.</p>
+        <p style="color: #a1a1aa; font-size: 12px;">Si no fuiste tú, puedes ignorar este correo de forma segura.</p>
+      </div>
+    `;
 
-      if (error) {
-        console.error('Resend API returned an error:', error);
-        console.log(`[DEV] (Email failed) Password reset link for ${email}: ${resetLink}`);
-      } else {
-        console.log(`[DEV] Password reset link sent successfully to ${email}. ID: ${data?.id}`);
-      }
+    try {
+      await this.sendEmail(user.email, 'Recuperación de Contraseña - Portfolio', htmlContent);
     } catch (error) {
       console.error('Error sending email:', error);
       console.log(`[DEV] (Email failed) Password reset link for ${email}: ${resetLink}`);
