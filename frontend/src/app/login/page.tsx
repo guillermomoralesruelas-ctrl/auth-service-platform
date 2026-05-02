@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 import { api } from '../../lib/axios';
 import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
 
@@ -34,10 +35,13 @@ export default function LoginPage() {
       const response = await api.post('/auth/login', { email, password });
       Cookies.set('access_token', response.data.access_token, { path: '/' });
       Cookies.set('refresh_token', response.data.refresh_token, { path: '/' });
-      localStorage.setItem('user_id', response.data.user.id);
+      
+      const decoded: any = jwtDecode(response.data.access_token);
+      localStorage.setItem('user_id', decoded.sub);
       
       router.push('/dashboard');
     } catch (err: any) {
+      console.error(err);
       setError(err.response?.data?.message || 'Invalid credentials');
     } finally {
       setLoading(false);
@@ -45,8 +49,12 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = () => {
-    const baseURL = api.defaults.baseURL || 'http://localhost:8080/api';
-    window.location.href = `${baseURL}/auth/google`;
+    const isProduction = process.env.NODE_ENV === 'production';
+    const backendUrl = isProduction 
+      ? 'https://api-gateway-production.up.railway.app' 
+      : 'http://localhost:8080';
+    
+    window.location.href = `${backendUrl}/api/auth/google`;
   };
 
   return (

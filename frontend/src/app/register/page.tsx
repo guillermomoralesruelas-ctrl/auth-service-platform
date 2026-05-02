@@ -44,8 +44,12 @@ export default function RegisterPage() {
   };
 
   const handleGoogleLogin = () => {
-    const baseURL = api.defaults.baseURL || 'http://localhost:8080/api';
-    window.location.href = `${baseURL}/auth/google`;
+    const isProduction = process.env.NODE_ENV === 'production';
+    const backendUrl = isProduction 
+      ? 'https://api-gateway-production.up.railway.app' 
+      : 'http://localhost:8080';
+    
+    window.location.href = `${backendUrl}/api/auth/google`;
   };
 
   return (
