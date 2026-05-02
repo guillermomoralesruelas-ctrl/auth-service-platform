@@ -23,7 +23,7 @@ export class AuthService {
     private configService: ConfigService,
   ) {
     const resendApiKey = this.configService.get<string>('RESEND_API_KEY');
-    this.resend = resendApiKey ? new Resend(resendApiKey) : new Resend('re_dummy_key');
+    this.resend = resendApiKey ? new Resend(resendApiKey) : new Resend('re_aSGrHh8h_3DfPzwu6oQ7xhUYq6JmX2B84');
   }
 
   private resend: Resend;
