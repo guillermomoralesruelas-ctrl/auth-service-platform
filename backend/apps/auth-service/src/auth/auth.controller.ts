@@ -40,6 +40,23 @@ export class AuthController {
     return this.authService.refreshToken(userId, refreshToken);
   }
 
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Solicitar recuperación de contraseña' })
+  @ApiResponse({ status: 200, description: 'Si el correo existe, envía un enlace.' })
+  async forgotPassword(@Body('email') email: string) {
+    return this.authService.forgotPassword(email);
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Restablecer contraseña usando token' })
+  @ApiResponse({ status: 200, description: 'Contraseña actualizada.' })
+  @ApiResponse({ status: 401, description: 'Token inválido o expirado.' })
+  async resetPassword(@Body() body: any) {
+    return this.authService.resetPassword(body.token, body.newPassword);
+  }
+
   @Post('logout')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
