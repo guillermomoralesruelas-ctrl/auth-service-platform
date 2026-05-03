@@ -199,9 +199,9 @@ export default function RegisterPage() {
 
           <p className="text-[11px] text-zinc-500 text-center mt-5 leading-relaxed">
             By creating an account, you agree to our{" "}
-            <Link href="#" className="text-zinc-300 hover:text-white underline-offset-2 hover:underline">Terms</Link>{" "}
+            <Link href="/privacy-policy" target="_blank" className="text-zinc-300 hover:text-white underline-offset-2 hover:underline">Terms</Link>{" "}
             and{" "}
-            <Link href="#" className="text-zinc-300 hover:text-white underline-offset-2 hover:underline">Privacy Policy</Link>.
+            <Link href="/privacy-policy" target="_blank" className="text-zinc-300 hover:text-white underline-offset-2 hover:underline">Privacy Policy</Link>.
           </p>
         </div>
 
