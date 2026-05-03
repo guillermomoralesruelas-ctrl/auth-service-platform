@@ -32,9 +32,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div className="backdrop-blur-2xl bg-[#161722]/60 border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/40">
-          
-          <div className="page prose prose-invert max-w-none">
-            <div className="header mb-8 pb-8 border-b border-white/10">
+          <div className="page max-w-none [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mb-6 [&_h1]:mt-10 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-white [&_h2]:mb-5 [&_h2]:mt-12 [&_h2]:border-b [&_h2]:border-white/10 [&_h2]:pb-2 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-violet-100 [&_h3]:mb-4 [&_h3]:mt-8 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-zinc-200 [&_h4]:mb-3 [&_h4]:mt-6 [&_p]:text-zinc-300 [&_p]:mb-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_ul]:text-zinc-300 [&_li]:mb-3 [&_strong]:text-white [&_strong]:font-bold">
               <div className="container">
                 <h1 className="title text-3xl font-semibold text-white tracking-tight m-0">Privacy Policy for frontend auth service</h1>
               </div>
